@@ -18,14 +18,44 @@ class StudentListTest {
     }
 
     @Test
+    @DisplayName("ทดสอบการเพิ่มนักเรียน")
+    void testAddNewStudent() {
+        studentList.addNewStudent("6721xxxx", "test4");
+        assertEquals(studentList.getStudents().get(3) , studentList.findStudentById("6721xxxx"));
+    }
+
+    @Test
+    @DisplayName("ทดสอบการเพิ่มนักเรียนแบบมีคะแนน")
+    void testAddNewStudentWithScore() {
+        studentList.addNewStudent("6721xxxx", "test4", 12.56);
+        assertEquals(12.56, studentList.findStudentById("6721xxxx").getScore());
+    }
+
+    @Test
     @DisplayName("ทดสอบการหานักเรียนจากรหัสนิสิต")
     void testFindStudentById() {
         assertEquals(studentList.getStudents().get(1) , studentList.findStudentById("6719xxxx"));
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("ทดสอบการหาชื่อด้วยตัวอักษร")
     void testFilterByName() {
-        assertEquals(studentList.getStudents(), studentList.filterByName("test"));
+        StudentList filtered = studentList.filterByName("T");
+
+        assertEquals(studentList.getStudents(), filtered.getStudents());
+    }
+
+    @Test
+    @DisplayName("ทดสอบการเพิ่มคะแนนจากรหัสนิสิต")
+    void testGiveScoreToId() {
+        studentList.giveScoreToId("6719xxxx", 4);
+
+        assertEquals(60, studentList.findStudentById("6719xxxx").getScore());
+    }
+
+    @Test
+    @DisplayName("ทดสอบการดูเกรดจากรหัสนิสิต")
+    void testViewGradeOfId() {
+        assertEquals("D", studentList.viewGradeOfId("6719xxxx"));
     }
 }
